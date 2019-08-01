@@ -36,7 +36,7 @@ const routes = {
 const pug = () => gulp.src(routes.pug.src)
 .pipe(gpug()).pipe(gulp.dest(routes.pug.dest))
 
-const clean = () => del(["build"]);
+const clean = () => del(["build", ".publish/"]);
 
 
 const webserver = () => gulp.src("build").pipe(ws({livereload: true, open: true}))
@@ -80,4 +80,4 @@ const postDev = gulp.series([webserver, watch]);
 
 export const build = gulp.series([prepare, assets])
 export const dev = gulp.series([build, postDev]);
-export const deploy = gulp.series([build, gh])
+export const deploy = gulp.series([build, gh, clean])
